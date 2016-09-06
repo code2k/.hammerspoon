@@ -49,7 +49,6 @@ end
 
 
 local function notifyBattery(showOnScreen)
-  print(hs.inspect(batteryState))
   local chargeInfo
   if batteryState.isCharging then
     chargeInfo = "Charging"
@@ -84,7 +83,7 @@ local onBatteryChange = function()
   local oldState = batteryState
   batteryState = hs.battery.getAll()
 
-  --print(hs.inspect(batteryState))
+  log.d(hs.inspect(batteryState))
 
   if oldState.powerSource ~= batteryState.powerSource then
     -- battery <> AC change
