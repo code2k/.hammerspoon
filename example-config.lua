@@ -58,4 +58,12 @@ cfg.notifications = {
 }
 
 
+----------------------------------------------------------------------
+--  Automatically enable / disable Bluetooth on monitor connection  --
+--  Requires https://github.com/toy/blueutil                        --
+----------------------------------------------------------------------
+
+cfg.manageBluetooth = false
+
+
 return cfg

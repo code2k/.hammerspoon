@@ -120,11 +120,13 @@ end
 ----------------------
 
 function screenWatcher()
-  local blueutil = "/usr/local/bin/blueutil"
-  if (#hs.screen.allScreens() == 1) then
-    os.execute(blueutil .. " power 0")
-  else
-    os.execute(blueutil .. " power 1")
+  if cfg.manageBluetooth then
+    local blueutil = "/usr/local/bin/blueutil"
+    if (#hs.screen.allScreens() == 1) then
+      os.execute(blueutil .. " power 0")
+    else
+      os.execute(blueutil .. " power 1")
+    end
   end
   layout()
 end
