@@ -1,6 +1,27 @@
 utils = {}
 utils.__index = utils
 
+local fixBundle = {
+  ["com.google.chrome"] = "com.google.Chrome",
+  ["com.apple.safari"] = "com.apple.Safari",
+}
+
+
+-- Open and focus the default browser.
+-- @return browser instance
+function utils.focusBrowser()
+  local defaultBrowser = hs.urlevent.getDefaultHandler("http")
+  -- Bundle ID returned for Chrome and Safari is wrong
+  -- Use fixBundle table to correct it.
+  browserBundleID = fixBundle[defaultBrowser]
+  if not browserBundleID then
+    browserBundleID = defaultBrowser
+  end
+  local browser = hs.application.open(browserBundleID, 1, true)
+  browser:activate()
+  return browser
+end
+
 
 function utils.notify(title, subTitle, info, tag)
   local params = {

@@ -1,3 +1,4 @@
+require 'utils'
 require 'action'
 require 'hardware'
 
@@ -139,12 +140,16 @@ screenWatcher:start()
 
 hs.urlevent.bind("devopen", function(event, params)
   local url = params.url
-  local chrome = hs.appfinder.appFromName("Google Chrome")
-  chrome:selectMenuItem({ "File", "New Window" })
-  hs.urlevent.openURLWithBundle(url, "com.google.Chrome")
-  local window = chrome:focusedWindow()
-  window:moveOneScreenWest()
-  window:moveToUnit(hs.layout.right75)
+  local browser = utils.focusBrowser()
+  hs.eventtap.keyStroke({ "cmd" }, "n")
+  hs.timer.doAfter(1.0, function()
+    browser:activate()
+    hs.eventtap.keyStroke({ "cmd" }, "l")
+    hs.eventtap.keyStrokes(url)
+    hs.eventtap.keyStroke( {}, "return")
+    local window = browser:focusedWindow()
+    window:moveOneScreenWest() window:moveToUnit(hs.layout.right75)
+  end)
 end)
 
 
