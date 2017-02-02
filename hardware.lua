@@ -11,6 +11,7 @@ hardwareWatchers = {
   network = nil
 }
 
+
 local log = hs.logger.new("hardware")
 
 local currentWifi = hs.wifi.currentNetwork()
@@ -150,12 +151,21 @@ local onWifiChange = function()
 end
 
 
--------------------
---  Network TBD  --
--------------------
+-----------------------------
+--  Network Notifications  --
+-----------------------------
+
+local KEY_IPV4 = "State:/Network/Interface/en1/IPv4"
 
 local onIPChange = function(configuration, keys)
-  print(hs.inspect(keys))
+  local ipv4Table = configuration:contents(KEY_IPV4)
+  if next(ipv4Table) == nil then
+    utils.notify("IP address released")
+  else
+    local ipv4 = ipv4Table[KEY_IPV4]
+    local ip = ipv4.Addresses[1]
+    utils.notify("IP address acquired", ip)
+  end
 end
 
 
@@ -197,10 +207,11 @@ function hardware.start()
   if cfg.enableWifi then
     hardwareWatchers.wifi = hs.wifi.watcher.new(onWifiChange)
   end
-
-  --watchers.network = hs.network.configuration.open()
-  --watchers.network:setCallback(onIPChange)
-  --watchers.network:monitorKeys("State:/Network/Interface/en1/IPv4")
+  if cfg.enableNetwork then
+    hardwareWatchers.network = hs.network.configuration.open()
+    hardwareWatchers.network:setCallback(onIPChange)
+    hardwareWatchers.network:monitorKeys(KEY_IPV4)
+  end
 
   startAll()
 end

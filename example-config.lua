@@ -54,7 +54,8 @@ cfg.notifications = {
   enableBattery = true,
   enableVolumes = true,
   enableUsb = true,
-  enableWifi = true
+  enableWifi = true,
+  enableNetwork = true
 }
 
 
