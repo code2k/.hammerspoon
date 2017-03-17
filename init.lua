@@ -171,6 +171,10 @@ hs.hotkey.bind(cfg.mash, 'r', hs.reload)
 hs.hotkey.bind(cfg.mash, 'd', dumpLayout)
 hs.hotkey.bind(cfg.mash, 'b', function() hardware.showBatteryStatus(true) end)
 hs.hotkey.bind(cfg.mash, "h", hs.hints.windowHints)
+hs.hotkey.bind(cfg.mash, "m", function() 
+  -- insert email address at current cursor position
+  hs.eventtap.keyStrokes(cfg.email)
+end)
 
 hardware.start() -- enable hardware notifications
 layout() -- layout windows after start

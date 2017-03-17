@@ -21,6 +21,13 @@ hs.hints.fontSize = 14
 hs.hints.showTitleThresh = 8
 
 
+---------------------
+--  EMail address  --
+---------------------
+
+cfg.email = "jsmith@example.com"
+
+
 ---------------
 --  Layouts  --
 ---------------
